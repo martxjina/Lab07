@@ -1,5 +1,6 @@
 import flet as ft
 from UI.view import View
+from model.libro_DTO import Libro
 from model.model import Model
 
 '''
@@ -67,6 +68,6 @@ class Controller:
         else:
             for libro in libri:
                 self._view.txt_risultato.controls.append(
-                    ft.Text(f"{libro.titolo} - {libro.autore} ({libro.genere})")
+                    ft.Text(f"{libro.titolo} - {libro.autore} ({libro.genere}) - {libro.anno_pubblicazione}")
                 )
         self._view.update()
