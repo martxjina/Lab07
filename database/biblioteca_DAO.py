@@ -10,21 +10,24 @@ class BibliotecaDAO:
 
     # TODO
     def get_biblioteche(self):
-        db = DBConnect()
-        connessione = db.get_connection()
-        if connessione is None:
+        #db = DBConnect()
+        #connessione = db.get_connection()
+        conn = DBConnect.get_connection()
+        if conn is None:
             print("Errore: impossibile connettersi al database")
             return []
         biblioteche = []
-        cursore = connessione.cursor(dictionary=True)
+        cursore = conn.cursor(dictionary=True)
         query = "SELECT * FROM biblioteca"
         cursore.execute(query)
         for riga in cursore:
             biblioteca = Biblioteca(id=int(riga['id']),
-                                    nome=riga['nome'])
+                                    nome=riga['nome'],
+                                    indirizzo=riga['indirizzo']
+                                    )
             biblioteche.append(biblioteca)
         cursore.close()
-        connessione.close()
+        conn.close()
         return biblioteche
 
 

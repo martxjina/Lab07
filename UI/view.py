@@ -41,23 +41,27 @@ class View:
         # TODO
         self.dd_biblioteca = ft.Dropdown(
             label="Biblioteca",
-            width=300,
+            width=400,
             hint_text="Seleziona una biblioteca",
-            options=[ft.dropdown.Option(text="Nessun filtro", data=None)]
+            options=[ft.dropdown.Option(text="Nessun filtro", data=None)],
+            menu_height = 400,
+            on_select = self.controller.read_biblioteca
         )
 
         self.dd_genere = ft.Dropdown(
             label="Genere",
             width=200,
             hint_text="Seleziona un genere",
-            options=[ft.dropdown.Option(text="Nessun filtro", data=None)]
+            options=[ft.dropdown.Option(text="Nessun filtro", data=None)],
+            on_select = self.controller.read_genere,
+            menu_height = 400,
         )
+
+        self.controller.popola_dropdown()
 
         # Sezione 3: Libri
         # TODO
-        self.btn_cerca = ft.ElevatedButton(
-            text="Mostra Libri",
-            on_click=self._controller.handle_cerca
+        self.btn_cerca = ft.Button("Mostra Libri", on_click=self.controller.handle_cerca
         )
 
         self.txt_risultato = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
@@ -80,8 +84,12 @@ class View:
 
             # Sezione 2: Filtraggio
             # TODO
-            self.dd_biblioteca,
-            self.dd_genere,
+            ft.Row(
+                [self.dd_biblioteca, self.dd_genere],
+                   alignment=ft.MainAxisAlignment.CENTER,
+                   ),
+            ft.Divider(),
+
             # Sezione 3: Libri
             # TODO
             self.btn_cerca,

@@ -53,6 +53,7 @@ class Controller:
     # AZIONE: MOSTRA LIBRI
     # TODO
     def handle_cerca(self, e):
+        self._view.txt_risultato.controls.clear()
         id_biblio = None
         if self.biblioteca_selezionata is not None:
             id_biblio = self.biblioteca_selezionata.id
@@ -66,6 +67,6 @@ class Controller:
         else:
             for libro in libri:
                 self._view.txt_risultato.controls.append(
-                    ft.Text(f"{libro.titolo} - {libro.autore} ({libri.genere if hasattr(libro, 'genere') else ''})")
+                    ft.Text(f"{libro.titolo} - {libro.autore} ({libro.genere})")
                 )
         self._view.update()

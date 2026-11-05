@@ -10,13 +10,14 @@ class LibroDAO:
 
     # TODO
     def leggi_libro_db(self):
-        db = DBConnect()
-        connessione = db.get_connection()
-        if connessione is None:
+        #db = DBConnect()
+        #connessione = db.get_connection()
+        conn = DBConnect.get_connection()
+        if conn is None:
             print("Errore: impossibile connettersi al database")
             return []
         libri = []
-        cursore = connessione.cursor(dictionary=True)
+        cursore = conn.cursor(dictionary=True)
         query = "SELECT * FROM libro"
         cursore.execute(query)
 
@@ -30,18 +31,19 @@ class LibroDAO:
             libri.append(libro)
 
         cursore.close()
-        connessione.close()
+        conn.close()
         return libri
 
     def get_libri_filtrati(self, id_biblioteca, genere):
-        db = DBConnect()
-        connessione = db.get_connection()
-        if connessione is None:
+        #db = DBConnect()
+        #connessione = db.get_connection()
+        conn = DBConnect.get_connection()
+        if conn is None:
             print("Errore: impossibile connettersi al database")
             return []
 
         libri_filtrati = []
-        cursore = connessione.cursor(dictionary=True)
+        cursore = conn.cursor(dictionary=True)
         query = """ SELECT * FROM libro
                          WHERE (id_biblioteca = COALESCE(%s, id_biblioteca))
                          AND (genere = COALESCE(%s,genere)) """
@@ -59,21 +61,22 @@ class LibroDAO:
             libri_filtrati.append(libro)
 
         cursore.close()
-        connessione.close()
+        conn.close()
         return libri_filtrati
 
     def get_generi(self):
-        db = DBConnect()
-        connessione = db.get_connection()
-        if connessione is None:
+        #db = DBConnect()
+        #connessione = db.get_connection()
+        conn = DBConnect.get_connection()
+        if conn is None:
             print("Errore: impossibile connettersi al database")
             return []
         generi = []
-        cursore = connessione.cursor(dictionary=True)
+        cursore = conn.cursor(dictionary=True)
         query = "SELECT DISTINCT genere FROM libro WHERE genere IS NOT NULL"
         cursore.execute(query)
         for riga in cursore:
             generi.append(riga['genere'])
         cursore.close()
-        connessione.close()
+        conn.close()
         return generi
